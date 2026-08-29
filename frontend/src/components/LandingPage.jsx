@@ -13,7 +13,8 @@ import {
   Network,
   ShieldAlert,
   Database,
-  ArrowRight
+  ArrowRight,
+  FileText
 } from 'lucide-react';
 
 export default function LandingPage({ onOpenScanner, onSelectPreset, onSelectTab }) {

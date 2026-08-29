@@ -12,265 +12,282 @@ import {
   Globe,
   Network,
   ShieldAlert,
-  Database
+  Database,
+  ArrowRight
 } from 'lucide-react';
 
-export default function LandingPage({ onOpenScanner, onSelectPreset }) {
+export default function LandingPage({ onOpenScanner, onSelectPreset, onSelectTab }) {
   return (
-    <div className="landing-page">
-      {/* Navigation Header */}
-      <header className="landing-nav">
-        <a href="#top" className="landing-brand">
-          <span className="landing-brand-mark" aria-hidden="true">
-            <ShieldCheck className="w-4 h-4" />
-          </span>
-          <span>
-            phish<span>guard</span>
-          </span>
-        </a>
-
-        <nav className="landing-links" aria-label="Landing page navigation">
-          <a href="#why-phishguard">Why PhishGuard</a>
-          <a href="#workflow">How it works</a>
-          <a href="#teams">For teams</a>
-        </nav>
-
-        <div className="landing-nav-actions">
-          <button
-            type="button"
-            onClick={() => onOpenScanner()}
-            className="landing-sign-in"
-          >
-            Open workspace
-          </button>
-          <button
-            type="button"
-            onClick={() => onOpenScanner()}
-            className="landing-nav-cta"
-          >
-            Get a demo <ChevronRight className="w-3.5 h-3.5" />
-          </button>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <main id="top">
-        {/* Hero Section */}
-        <section className="landing-hero" aria-labelledby="landing-title">
-          {/* Floating Sticky Note */}
-          <div className="landing-decoration landing-note">
-            <div className="landing-pin"></div>
-            <p>
-              Stay ahead of
-              <br />
-              the next lure.
-            </p>
-            <span>PROTECT WITH CONTEXT</span>
-          </div>
-
-          {/* Floating Safe Check Card */}
-          <div className="landing-decoration landing-check">
-            <span className="landing-check-icon">
-              <Check className="w-4 h-4" />
-            </span>
-            <span>Safe to open</span>
-          </div>
-
-          {/* Floating Node Grid */}
-          <div className="landing-decoration landing-node">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-
-          {/* Floating Reminder Card */}
-          <div className="landing-decoration landing-reminder">
-            <div className="landing-reminder-head">
-              <span>Signal watch</span>
-              <Clock3 className="w-4 h-4" />
-            </div>
-            <strong>
-              Review critical
-              <br />
-              findings
-            </strong>
-            <div className="landing-reminder-time">
-              <span>Today</span>
-              <b>09:30 — 10:00</b>
-            </div>
-          </div>
-
-          {/* Hero Copy & Core Actions */}
-          <div className="landing-copy">
-            <div className="landing-kicker">
-              <span className="landing-kicker-dot"></span> Threat intelligence, made clear
-            </div>
-
-            <h1 id="landing-title">
-              See the threat.
-              <br />
-              <span>Make the call.</span>
-            </h1>
-
-            <p>
-              PhishGuard turns suspicious links into clear, defensible decisions—so your
-              team can move fast without guessing.
-            </p>
-
-            <div className="landing-hero-actions">
-              <button
-                type="button"
-                onClick={() => onOpenScanner()}
-                className="landing-primary-cta"
-              >
-                Analyze a URL <Radar className="w-4 h-4" />
-              </button>
-              <a href="#workflow" className="landing-secondary-cta">
-                See how it works <ArrowDownRight className="w-3.5 h-3.5" />
-              </a>
-            </div>
-
-            <div className="landing-proof">
-              <span>
-                <ShieldCheck className="w-3.5 h-3.5" /> Isolated analysis
-              </span>
-              <span>
-                <CheckCircle2 className="w-3.5 h-3.5" /> 28 signals per scan
-              </span>
-              <span>
-                <LockKeyhole className="w-3.5 h-3.5" /> No device requests
-              </span>
-            </div>
-          </div>
-
-          {/* Floating Detections Card */}
-          <div className="landing-decoration landing-tasks">
-            <div className="landing-card-title">
-              <span>Today's detections</span>
-              <span className="landing-card-count">03 open</span>
-            </div>
-
-            <div
-              className="landing-task cursor-pointer hover:opacity-80 transition-opacity"
-              onClick={() => onSelectPreset('https://paypa1-security.com/login')}
-              title="Click to test in scanner"
-            >
-              <span className="landing-task-dot critical"></span>
-              <div>
-                <b>account-verify-mail.com</b>
-                <span>Credential harvest</span>
-              </div>
-              <em>91%</em>
-            </div>
-
-            <div
-              className="landing-task cursor-pointer hover:opacity-80 transition-opacity"
-              onClick={() => onSelectPreset('https://paypa1-login.xyz/verify')}
-              title="Click to test in scanner"
-            >
-              <span className="landing-task-dot high"></span>
-              <div>
-                <b>cdn-docs-share.net</b>
-                <span>Malware delivery</span>
-              </div>
-              <em>78%</em>
-            </div>
-
-            <div
-              className="landing-task cursor-pointer hover:opacity-80 transition-opacity"
-              onClick={() => onSelectPreset('https://google.com')}
-              title="Click to test in scanner"
-            >
-              <span className="landing-task-dot low"></span>
-              <div>
-                <b>notion.so</b>
-                <span>Legitimate</span>
-              </div>
-              <em>08%</em>
-            </div>
-          </div>
-
-          {/* Connected Signals Floating Card */}
-          <div className="landing-decoration landing-stack">
-            <div className="landing-card-title">
-              <span>Connected signals</span>
-              <Sparkles className="w-3.5 h-3.5 text-cyan-500" />
-            </div>
-            <div className="landing-stack-icons">
-              <span>
-                <Globe className="w-4 h-4" />
-              </span>
-              <span>
-                <Network className="w-4 h-4" />
-              </span>
-              <span>
-                <ShieldAlert className="w-4 h-4" />
-              </span>
-              <span>
-                <Database className="w-4 h-4" />
-              </span>
-            </div>
-            <p>One clear read from every source.</p>
-          </div>
-        </section>
-
-        {/* Why PhishGuard Strip */}
-        <section className="landing-signal-strip" id="why-phishguard">
-          <div>
-            <span className="landing-strip-index">01</span>
-            <strong>Spot the signal</strong>
-            <p>Reputation, infrastructure, and behavior in one view.</p>
-          </div>
-          <div>
-            <span className="landing-strip-index">02</span>
-            <strong>Decide with confidence</strong>
-            <p>Every score comes with the evidence behind it.</p>
-          </div>
-          <div>
-            <span className="landing-strip-index">03</span>
-            <strong>Move as one team</strong>
-            <p>Share a crisp decision brief, not a data dump.</p>
-          </div>
-        </section>
-
-        {/* How It Works / Workflow Section */}
-        <section className="landing-workflow" id="workflow">
-          <div>
-            <span className="landing-kicker">A better handoff</span>
-            <h2>
-              Less noise.
-              <br />
-              <span>More knowing.</span>
-            </h2>
-          </div>
+    <div className="animate-fade-in">
+      {/* Hero Section */}
+      <section className="landing-hero" aria-labelledby="landing-title">
+        {/* Floating Sticky Note */}
+        <div className="landing-decoration landing-note">
+          <div className="landing-pin"></div>
           <p>
-            From the first suspicious URL to the final response, PhishGuard keeps the
-            important context close. Scan, understand, and take the safest next step
-            without leaving the flow.
+            Stay ahead of
+            <br />
+            the next lure.
           </p>
-          <button
-            type="button"
-            onClick={() => onOpenScanner()}
-            className="landing-text-link"
-          >
-            Try the workspace <ChevronRight className="w-3.5 h-3.5" />
-          </button>
-        </section>
-      </main>
+          <span>PROTECT WITH CONTEXT</span>
+        </div>
 
-      {/* Footer */}
-      <footer className="landing-footer" id="teams">
-        <span>phishguard</span>
-        <span>Quiet where it should be. Ready when it matters.</span>
+        {/* Floating Safe Check Card */}
+        <div className="landing-decoration landing-check">
+          <span className="landing-check-icon">
+            <Check className="w-4 h-4" />
+          </span>
+          <span>Safe to open</span>
+        </div>
+
+        {/* Floating Node Grid */}
+        <div className="landing-decoration landing-node">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+        {/* Floating Reminder Card */}
+        <div className="landing-decoration landing-reminder">
+          <div className="landing-reminder-head">
+            <span>Signal watch</span>
+            <Clock3 className="w-4 h-4" />
+          </div>
+          <strong>
+            Review critical
+            <br />
+            findings
+          </strong>
+          <div className="landing-reminder-time">
+            <span>Today</span>
+            <b>09:30 — 10:00</b>
+          </div>
+        </div>
+
+        {/* Hero Copy & Core Actions */}
+        <div className="landing-copy">
+          <div className="landing-kicker">
+            <span className="landing-kicker-dot"></span> Threat intelligence, made clear
+          </div>
+
+          <h1 id="landing-title">
+            See the threat.
+            <br />
+            <span>Make the call.</span>
+          </h1>
+
+          <p>
+            PhishGuard turns suspicious links and urgent messages into clear, defensible
+            decisions—powered by dual-engine AI (Transformer + Gemini Intelligence).
+          </p>
+
+          <div className="landing-hero-actions">
+            <button
+              type="button"
+              onClick={() => onOpenScanner()}
+              className="landing-primary-cta"
+            >
+              Analyze a URL <Radar className="w-4 h-4" />
+            </button>
+            <button
+              type="button"
+              onClick={() => onSelectTab('intel')}
+              className="landing-secondary-cta"
+            >
+              Live Threat Feed <ArrowDownRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
+
+          <div className="landing-proof">
+            <span>
+              <ShieldCheck className="w-3.5 h-3.5" /> Isolated analysis
+            </span>
+            <span>
+              <CheckCircle2 className="w-3.5 h-3.5" /> 28 signals per scan
+            </span>
+            <span>
+              <LockKeyhole className="w-3.5 h-3.5" /> No device requests
+            </span>
+          </div>
+        </div>
+
+        {/* Floating Detections Card */}
+        <div className="landing-decoration landing-tasks">
+          <div className="landing-card-title">
+            <span>Today's detections</span>
+            <span className="landing-card-count">03 live</span>
+          </div>
+
+          <div
+            className="landing-task cursor-pointer"
+            onClick={() => onSelectPreset('https://paypa1-security.com/login')}
+            title="Click to test in scanner"
+          >
+            <span className="landing-task-dot critical"></span>
+            <div>
+              <b>account-verify-mail.com</b>
+              <span>Credential harvest</span>
+            </div>
+            <em>91%</em>
+          </div>
+
+          <div
+            className="landing-task cursor-pointer"
+            onClick={() => onSelectPreset('https://paypa1-login.xyz/verify')}
+            title="Click to test in scanner"
+          >
+            <span className="landing-task-dot high"></span>
+            <div>
+              <b>cdn-docs-share.net</b>
+              <span>Malware delivery</span>
+            </div>
+            <em>78%</em>
+          </div>
+
+          <div
+            className="landing-task cursor-pointer"
+            onClick={() => onSelectPreset('https://google.com')}
+            title="Click to test in scanner"
+          >
+            <span className="landing-task-dot low"></span>
+            <div>
+              <b>notion.so</b>
+              <span>Legitimate</span>
+            </div>
+            <em>08%</em>
+          </div>
+        </div>
+
+        {/* Connected Signals Floating Card */}
+        <div className="landing-decoration landing-stack">
+          <div className="landing-card-title">
+            <span>Connected signals</span>
+            <Sparkles className="w-3.5 h-3.5 text-primary" />
+          </div>
+          <div className="landing-stack-icons">
+            <span>
+              <Globe className="w-4 h-4" />
+            </span>
+            <span>
+              <Network className="w-4 h-4" />
+            </span>
+            <span>
+              <ShieldAlert className="w-4 h-4" />
+            </span>
+            <span>
+              <Database className="w-4 h-4" />
+            </span>
+          </div>
+          <p>One clear read from every source.</p>
+        </div>
+      </section>
+
+      {/* Why PhishGuard Strip */}
+      <section className="landing-signal-strip" id="why-phishguard">
+        <div>
+          <span className="landing-strip-index">01</span>
+          <strong>Spot the signal</strong>
+          <p>Reputation, domain heuristics, and neural embeddings in one unified view.</p>
+        </div>
+        <div>
+          <span className="landing-strip-index">02</span>
+          <strong>Decide with confidence</strong>
+          <p>Every score comes with transparent evidence signals and AI reasoning.</p>
+        </div>
+        <div>
+          <span className="landing-strip-index">03</span>
+          <strong>Move as one team</strong>
+          <p>Share a crisp security brief with immediate recommendations.</p>
+        </div>
+      </section>
+
+      {/* How It Works / Workflow Section */}
+      <section className="landing-workflow" id="workflow">
+        <div>
+          <span className="landing-kicker">A better handoff</span>
+          <h2>
+            Less noise.
+            <br />
+            <span>More knowing.</span>
+          </h2>
+        </div>
+        <p>
+          From the first suspicious URL to the final response, PhishGuard keeps the
+          important context close. Scan, understand, and take the safest next step
+          without leaving the flow.
+        </p>
         <button
           type="button"
           onClick={() => onOpenScanner()}
-          className="flex items-center gap-1 text-[#247de8] font-bold"
+          className="landing-text-link"
         >
-          Open the workspace <ChevronRight className="w-3.5 h-3.5" />
+          Try the workspace <ChevronRight className="w-3.5 h-3.5" />
         </button>
-      </footer>
+      </section>
+
+      {/* Multi-Page Quick Access Grid */}
+      <section className="max-w-6xl mx-auto px-6 py-12">
+        <div className="text-center mb-10">
+          <span className="theme-badge theme-badge-primary mb-2">COMPLETE DEFENSE SUITE</span>
+          <h3 className="text-2xl font-extrabold text-slate-900 mt-1">
+            Enterprise Threat Platform Capabilities
+          </h3>
+          <p className="text-sm text-slate-500 max-w-xl mx-auto mt-2">
+            Explore dedicated modules built for security analysts, incident responders, and end-users.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div
+            onClick={() => onSelectTab('scanner')}
+            className="theme-card p-6 cursor-pointer hover:border-blue-400 group"
+          >
+            <div className="p-2.5 w-10 h-10 rounded-xl bg-blue-50 text-primary mb-4 flex items-center justify-center">
+              <Radar className="w-5 h-5" />
+            </div>
+            <h4 className="font-bold text-base text-slate-900 mb-1 flex items-center justify-between">
+              <span>Threat Scanner</span>
+              <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-primary transition-all group-hover:translate-x-1" />
+            </h4>
+            <p className="text-xs text-slate-500 leading-relaxed">
+              Deep link inspection combining urlbert-tiny-v4 transformer inference with Gemini threat intelligence.
+            </p>
+          </div>
+
+          <div
+            onClick={() => onSelectTab('intel')}
+            className="theme-card p-6 cursor-pointer hover:border-amber-400 group"
+          >
+            <div className="p-2.5 w-10 h-10 rounded-xl bg-amber-50 text-amber-600 mb-4 flex items-center justify-center">
+              <Globe className="w-5 h-5" />
+            </div>
+            <h4 className="font-bold text-base text-slate-900 mb-1 flex items-center justify-between">
+              <span>Live Threat Feed</span>
+              <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-amber-600 transition-all group-hover:translate-x-1" />
+            </h4>
+            <p className="text-xs text-slate-500 leading-relaxed">
+              Real-time telemetry showing active malicious domains, typosquats, and campaign targets across the web.
+            </p>
+          </div>
+
+          <div
+            onClick={() => onSelectTab('studio')}
+            className="theme-card p-6 cursor-pointer hover:border-indigo-400 group"
+          >
+            <div className="p-2.5 w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 mb-4 flex items-center justify-center">
+              <Network className="w-5 h-5" />
+            </div>
+            <h4 className="font-bold text-base text-slate-900 mb-1 flex items-center justify-between">
+              <span>AI Studio & Sandbox</span>
+              <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-indigo-600 transition-all group-hover:translate-x-1" />
+            </h4>
+            <p className="text-xs text-slate-500 leading-relaxed">
+              Redirect tracer, Shannon entropy calculation, character substitution matrix, and prompt playground.
+            </p>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

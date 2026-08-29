@@ -7,10 +7,10 @@ from backend.config import (
 )
 
 SEVERITY_POINTS = {
-    "CRITICAL": 35,
-    "HIGH": 25,
-    "MEDIUM": 15,
-    "LOW": 5
+    "CRITICAL": 55,
+    "HIGH": 35,
+    "MEDIUM": 20,
+    "LOW": 10
 }
 
 def compute_risk(

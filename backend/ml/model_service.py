@@ -20,12 +20,12 @@ class URLBERTModelService:
             self.model = AutoModelForSequenceClassification.from_pretrained(MODEL_NAME)
             self.model.eval()
             
-            # Check if model config has meaningful id2label or generic LABEL_X
-            DEFAULT_CLASSES = {0: "benign", 1: "defacement", 2: "phishing", 3: "malware"}
+            # Accurate class index mapping for CrabInHoney/urlbert-tiny-v4-malicious-url-classifier
+            DEFAULT_CLASSES = {0: "defacement", 1: "phishing", 2: "malware", 3: "benign"}
             
             if hasattr(self.model.config, "id2label") and self.model.config.id2label:
                 raw_mapping = self.model.config.id2label
-                # If config contains generic 'LABEL_0', 'LABEL_1'..., fallback to dataset standard labels
+                # If config contains generic 'LABEL_0', 'LABEL_1'..., use the dataset standard class map
                 if any("LABEL_" in str(v) for v in raw_mapping.values()):
                     self.id2label = DEFAULT_CLASSES
                 else:
@@ -34,7 +34,7 @@ class URLBERTModelService:
                 self.id2label = DEFAULT_CLASSES
 
             self.is_loaded = True
-            logger.info(f"Model loaded successfully with labels: {self.id2label}")
+            logger.info(f"Model loaded successfully with calibrated labels: {self.id2label}")
         except Exception as e:
             logger.error(f"Failed to load ML model '{MODEL_NAME}': {e}", exc_info=True)
             self.is_loaded = False

@@ -19,6 +19,13 @@ KNOWN_BRANDS = [
     "binance", "coinbase", "metamask", "steam", "discord", "outlook", "yahoo"
 ]
 
+KNOWN_OFFICIAL_DOMAINS = {
+    "google.com", "google.co.in", "google.co.uk", "google.ca", "google.de", "google.fr", "google.org",
+    "paypal.com", "microsoft.com", "apple.com", "amazon.com", "amazon.in",
+    "github.com", "netflix.com", "facebook.com", "instagram.com", "meta.com",
+    "whatsapp.com", "wikipedia.org", "youtube.com", "linkedin.com", "twitter.com", "x.com"
+}
+
 LOOKALIKE_REPLACEMENTS = {
     '0': 'o', '1': 'l', '1': 'i', '3': 'e', '4': 'a', '5': 's',
     '7': 't', '8': 'b', '@': 'a', 'v': 'u'
@@ -31,9 +38,13 @@ def is_ip_address(hostname: str) -> bool:
 
 def detect_lookalike_domain(domain_name: str) -> tuple[bool, str]:
     """Detects typosquatting / homoglyph tricks trying to mimic known brands."""
-    domain_lower = domain_name.lower()
+    domain_lower = domain_name.lower().strip()
     
-    # Normalize numbers/digits commonly swapped in domain names (e.g., paypa1 -> paypal, go0gle -> google)
+    # 1. Check if domain is a verified authentic brand domain
+    if domain_lower in KNOWN_OFFICIAL_DOMAINS or any(domain_lower.endswith(f".{d}") for d in KNOWN_OFFICIAL_DOMAINS):
+        return False, ""
+
+    # 2. Normalize numbers/digits commonly swapped in domain names (e.g., paypa1 -> paypal, go0gle -> google)
     normalized = domain_lower
     for digit, char in [('1', 'l'), ('0', 'o'), ('3', 'e'), ('4', 'a'), ('5', 's'), ('8', 'b')]:
         normalized = normalized.replace(digit, char)
@@ -43,13 +54,12 @@ def detect_lookalike_domain(domain_name: str) -> tuple[bool, str]:
         if brand in normalized and brand not in domain_lower:
             return True, f"Domain attempts to mimic brand '{brand.capitalize()}' using character substitution."
         
-        # Levenshtein distance check or substring check if brand combined with hyphens (e.g. paypal-login)
+        # Check if brand is combined with deceptive hyphens / prefixes (e.g. paypal-login, google-verify)
         if brand in domain_lower:
-            # If domain isn't official brand domain (e.g., paypa1-login.xyz or paypal-security-update.com)
             parts = domain_lower.split('.')
             main_sld = parts[-2] if len(parts) >= 2 else parts[0]
-            if main_sld != brand:
-                return True, f"Domain contains brand name '{brand.capitalize()}' within an unofficial domain name ('{main_sld}')."
+            if main_sld != brand and '-' in main_sld:
+                return True, f"Domain contains brand name '{brand.capitalize()}' within an unofficial lookalike domain ('{main_sld}')."
 
     return False, ""
 

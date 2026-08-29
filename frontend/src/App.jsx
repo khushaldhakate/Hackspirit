@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import LandingPage from './components/LandingPage';
 import Header from './components/Header';
 import ScannerInput from './components/ScannerInput';
 import ScanProgress from './components/ScanProgress';
@@ -6,11 +7,12 @@ import RiskGauge from './components/RiskGauge';
 import EvidenceList from './components/EvidenceList';
 import ActionCard from './components/ActionCard';
 import LlmExplanation from './components/LlmExplanation';
-import { AlertCircle, Shield, Terminal } from 'lucide-react';
+import { AlertCircle, Shield, ArrowLeft } from 'lucide-react';
 
 const API_ENDPOINT = '/api/analyze';
 
 export default function App() {
+  const [currentView, setCurrentView] = useState('landing'); // 'landing' | 'scanner'
   const [isLoading, setIsLoading] = useState(false);
   const [analysisResult, setAnalysisResult] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
@@ -19,6 +21,7 @@ export default function App() {
     setIsLoading(true);
     setErrorMsg(null);
     setAnalysisResult(null);
+    setCurrentView('scanner');
 
     try {
       let response;
@@ -29,7 +32,7 @@ export default function App() {
           body: JSON.stringify({ input: inputText }),
         });
       } catch (err) {
-        // Fallback to absolute localhost backend URL if relative fetch fails
+        // Fallback to direct localhost backend URL if relative proxy is not active
         response = await fetch('http://127.0.0.1:8000/api/analyze', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -54,14 +57,47 @@ export default function App() {
     }
   };
 
+  const handleOpenScanner = () => {
+    setCurrentView('scanner');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleSelectPreset = (url) => {
+    setCurrentView('scanner');
+    handleAnalyze(url);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  if (currentView === 'landing') {
+    return (
+      <LandingPage
+        onOpenScanner={handleOpenScanner}
+        onSelectPreset={handleSelectPreset}
+      />
+    );
+  }
+
   return (
-    <div className="min-h-screen flex flex-col justify-between cyber-grid">
-      
+    <div className="workspace-page min-h-screen flex flex-col justify-between cyber-grid">
       <div>
         <Header />
 
         <main className="max-w-5xl mx-auto px-4 sm:px-6 pb-16">
-          
+          {/* Back to Landing Page Button */}
+          <div className="mb-6 flex items-center justify-between">
+            <button
+              type="button"
+              onClick={() => setCurrentView('landing')}
+              className="inline-flex items-center gap-2 text-xs font-bold text-slate-400 hover:text-cyan-400 bg-slate-900/80 hover:bg-slate-800 border border-slate-800 px-3.5 py-2 rounded-xl transition-all"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span>Back to Home</span>
+            </button>
+            <span className="text-xs font-mono text-slate-500">
+              PhishGuard Security Workspace
+            </span>
+          </div>
+
           {/* Main Input Form */}
           <ScannerInput onAnalyze={handleAnalyze} isLoading={isLoading} />
 
@@ -76,7 +112,7 @@ export default function App() {
                 <h4 className="font-bold text-sm">ANALYSIS REQUEST ERROR</h4>
                 <p className="text-xs text-rose-200 mt-1">{errorMsg}</p>
                 <p className="text-[11px] text-slate-400 mt-2 font-mono">
-                  Make sure backend server is running on http://127.0.0.1:8000
+                  Ensure backend server is running on http://127.0.0.1:8000
                 </p>
               </div>
             </div>
@@ -85,7 +121,6 @@ export default function App() {
           {/* Analysis Results Display */}
           {analysisResult && !isLoading && (
             <div className="space-y-6 animate-fade-in">
-              
               {/* Risk Gauge & Overview */}
               <RiskGauge
                 risk={analysisResult.risk}
@@ -104,10 +139,8 @@ export default function App() {
 
               {/* Action Recommendation */}
               <ActionCard riskLevel={analysisResult.risk?.level} />
-
             </div>
           )}
-
         </main>
       </div>
 
@@ -119,11 +152,10 @@ export default function App() {
             <span className="font-bold text-slate-400">PhishGuard HackSprint Project</span>
           </div>
           <p className="font-mono text-[11px]">
-            Hugging Face Transformer (urlbert-tiny-v4) + Deterministic Risk Engine (60/40)
+            Hugging Face Transformer (urlbert-tiny-v4) + Deterministic Risk Engine (60/40) + Gemini AI
           </p>
         </div>
       </footer>
-
     </div>
   );
 }

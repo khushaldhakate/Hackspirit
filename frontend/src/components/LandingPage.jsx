@@ -21,8 +21,8 @@ export default function LandingPage({ onOpenScanner, onSelectPreset, onSelectTab
     <div className="animate-fade-in">
       {/* Hero Section */}
       <section className="landing-hero" aria-labelledby="landing-title">
-        {/* Floating Sticky Note */}
-        <div className="landing-decoration landing-note">
+        {/* Floating Badges (Desktop & Large Tablets) */}
+        <div className="landing-decoration landing-note hidden lg:block">
           <div className="landing-pin"></div>
           <p>
             Stay ahead of
@@ -32,24 +32,21 @@ export default function LandingPage({ onOpenScanner, onSelectPreset, onSelectTab
           <span>PROTECT WITH CONTEXT</span>
         </div>
 
-        {/* Floating Safe Check Card */}
-        <div className="landing-decoration landing-check">
+        <div className="landing-decoration landing-check hidden lg:flex">
           <span className="landing-check-icon">
             <Check className="w-4 h-4" />
           </span>
           <span>Safe to open</span>
         </div>
 
-        {/* Floating Node Grid */}
-        <div className="landing-decoration landing-node">
+        <div className="landing-decoration landing-node hidden lg:grid">
           <span></span>
           <span></span>
           <span></span>
           <span></span>
         </div>
 
-        {/* Floating Reminder Card */}
-        <div className="landing-decoration landing-reminder">
+        <div className="landing-decoration landing-reminder hidden lg:block">
           <div className="landing-reminder-head">
             <span>Signal watch</span>
             <Clock3 className="w-4 h-4" />
@@ -82,24 +79,24 @@ export default function LandingPage({ onOpenScanner, onSelectPreset, onSelectTab
             decisions—powered by dual-engine AI (Transformer + Gemini Intelligence).
           </p>
 
-          <div className="landing-hero-actions">
+          <div className="landing-hero-actions flex-wrap">
             <button
               type="button"
               onClick={() => onOpenScanner()}
-              className="landing-primary-cta"
+              className="landing-primary-cta w-full sm:w-auto"
             >
               Analyze a URL <Radar className="w-4 h-4" />
             </button>
             <button
               type="button"
               onClick={() => onSelectTab('intel')}
-              className="landing-secondary-cta"
+              className="landing-secondary-cta w-full sm:w-auto justify-center"
             >
               Live Threat Feed <ArrowDownRight className="w-3.5 h-3.5" />
             </button>
           </div>
 
-          <div className="landing-proof">
+          <div className="landing-proof flex-wrap">
             <span>
               <ShieldCheck className="w-3.5 h-3.5" /> Isolated analysis
             </span>
@@ -112,8 +109,8 @@ export default function LandingPage({ onOpenScanner, onSelectPreset, onSelectTab
           </div>
         </div>
 
-        {/* Floating Detections Card */}
-        <div className="landing-decoration landing-tasks">
+        {/* Floating Detections Card (Desktop only) */}
+        <div className="landing-decoration landing-tasks hidden lg:block">
           <div className="landing-card-title">
             <span>Today's detections</span>
             <span className="landing-card-count">03 live</span>
@@ -159,8 +156,8 @@ export default function LandingPage({ onOpenScanner, onSelectPreset, onSelectTab
           </div>
         </div>
 
-        {/* Connected Signals Floating Card */}
-        <div className="landing-decoration landing-stack">
+        {/* Connected Signals Floating Card (Desktop only) */}
+        <div className="landing-decoration landing-stack hidden lg:block">
           <div className="landing-card-title">
             <span>Connected signals</span>
             <Sparkles className="w-3.5 h-3.5 text-primary" />
@@ -180,6 +177,53 @@ export default function LandingPage({ onOpenScanner, onSelectPreset, onSelectTab
             </span>
           </div>
           <p>One clear read from every source.</p>
+        </div>
+      </section>
+
+      {/* Mobile Detection Cards Preview (Visible on mobile/tablet) */}
+      <section className="block lg:hidden max-w-xl mx-auto px-4 mb-12">
+        <div className="theme-card p-5 bg-white shadow-sm border border-slate-200">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-xs font-bold text-slate-800">Quick Test Detections</span>
+            <span className="theme-badge theme-badge-primary">Interactive</span>
+          </div>
+          <div className="space-y-2">
+            {[
+              {
+                domain: 'account-verify-mail.com',
+                type: 'Credential Harvest (91%)',
+                url: 'https://paypa1-security.com/login',
+                dot: 'critical'
+              },
+              {
+                domain: 'cdn-docs-share.net',
+                type: 'Malware Drop (78%)',
+                url: 'https://cdn-docs-share.net/download/payload.exe',
+                dot: 'high'
+              },
+              {
+                domain: 'google.com',
+                type: 'Verified Safe (0%)',
+                url: 'https://google.com',
+                dot: 'safe'
+              }
+            ].map((d, i) => (
+              <div
+                key={i}
+                onClick={() => onSelectPreset(d.url)}
+                className="p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-between cursor-pointer hover:bg-slate-100 transition-colors"
+              >
+                <div className="flex items-center gap-2.5">
+                  <span className={`landing-task-dot ${d.dot === 'safe' ? '' : d.dot}`} />
+                  <div>
+                    <strong className="text-xs text-slate-800 mono-text block">{d.domain}</strong>
+                    <span className="text-[10px] text-slate-500">{d.type}</span>
+                  </div>
+                </div>
+                <ArrowRight className="w-3.5 h-3.5 text-primary" />
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -227,21 +271,21 @@ export default function LandingPage({ onOpenScanner, onSelectPreset, onSelectTab
       </section>
 
       {/* Multi-Page Quick Access Grid */}
-      <section className="max-w-6xl mx-auto px-6 py-12">
-        <div className="text-center mb-10">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
+        <div className="text-center mb-8 sm:mb-10">
           <span className="theme-badge theme-badge-primary mb-2">COMPLETE DEFENSE SUITE</span>
-          <h3 className="text-2xl font-extrabold text-slate-900 mt-1">
+          <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 mt-1">
             Enterprise Threat Platform Capabilities
           </h3>
-          <p className="text-sm text-slate-500 max-w-xl mx-auto mt-2">
+          <p className="text-xs sm:text-sm text-slate-500 max-w-xl mx-auto mt-2">
             Explore dedicated modules built for security analysts, incident responders, and end-users.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
           <div
             onClick={() => onSelectTab('scanner')}
-            className="theme-card p-6 cursor-pointer hover:border-blue-400 group"
+            className="theme-card p-5 sm:p-6 cursor-pointer hover:border-blue-400 group"
           >
             <div className="p-2.5 w-10 h-10 rounded-xl bg-blue-50 text-primary mb-4 flex items-center justify-center">
               <Radar className="w-5 h-5" />
@@ -257,7 +301,7 @@ export default function LandingPage({ onOpenScanner, onSelectPreset, onSelectTab
 
           <div
             onClick={() => onSelectTab('intel')}
-            className="theme-card p-6 cursor-pointer hover:border-amber-400 group"
+            className="theme-card p-5 sm:p-6 cursor-pointer hover:border-amber-400 group"
           >
             <div className="p-2.5 w-10 h-10 rounded-xl bg-amber-50 text-amber-600 mb-4 flex items-center justify-center">
               <Globe className="w-5 h-5" />
@@ -273,7 +317,7 @@ export default function LandingPage({ onOpenScanner, onSelectPreset, onSelectTab
 
           <div
             onClick={() => onSelectTab('studio')}
-            className="theme-card p-6 cursor-pointer hover:border-indigo-400 group"
+            className="theme-card p-5 sm:p-6 cursor-pointer hover:border-indigo-400 group"
           >
             <div className="p-2.5 w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 mb-4 flex items-center justify-center">
               <Network className="w-5 h-5" />

@@ -7,7 +7,8 @@ import ReportsPage from './components/ReportsPage';
 import AiStudioPage from './components/AiStudioPage';
 import { ShieldCheck, ChevronRight } from 'lucide-react';
 
-const API_ENDPOINT = '/api/analyze';
+const API_BASE = import.meta.env.VITE_API_URL || '';
+const API_ENDPOINT = API_BASE ? `${API_BASE.replace(/\/$/, '')}/api/analyze` : '/api/analyze';
 
 export default function App() {
   const [currentTab, setCurrentTab] = useState('home'); // 'home' | 'scanner' | 'intel' | 'reports' | 'studio'

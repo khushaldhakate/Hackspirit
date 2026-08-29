@@ -4,14 +4,13 @@ import LandingPage from './components/LandingPage';
 import ThreatScanner from './components/ThreatScanner';
 import ThreatIntelPage from './components/ThreatIntelPage';
 import ReportsPage from './components/ReportsPage';
-import AiStudioPage from './components/AiStudioPage';
 import { ShieldCheck, ChevronRight } from 'lucide-react';
 
 const API_BASE = import.meta.env.VITE_API_URL || '';
 const API_ENDPOINT = API_BASE ? `${API_BASE.replace(/\/$/, '')}/api/analyze` : '/api/analyze';
 
 export default function App() {
-  const [currentTab, setCurrentTab] = useState('home'); // 'home' | 'scanner' | 'intel' | 'reports' | 'studio'
+  const [currentTab, setCurrentTab] = useState('home'); // 'home' | 'scanner' | 'intel' | 'reports'
   const [isLoading, setIsLoading] = useState(false);
   const [analysisResult, setAnalysisResult] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
@@ -105,7 +104,6 @@ export default function App() {
               isLoading={isLoading}
               errorMsg={errorMsg}
               onAnalyze={handleAnalyze}
-              onOpenStudio={() => handleSelectTab('studio')}
             />
           )}
 
@@ -118,10 +116,6 @@ export default function App() {
               history={scanHistory}
               onReinspect={handlePresetSelect}
             />
-          )}
-
-          {currentTab === 'studio' && (
-            <AiStudioPage onAnalyzeLink={handlePresetSelect} />
           )}
         </main>
 

@@ -74,15 +74,6 @@ export default function Navbar({ currentTab, onSelectTab }) {
             <FileText className="w-3.5 h-3.5" />
             <span>Reports</span>
           </button>
-
-          <button
-            type="button"
-            onClick={() => handleTabClick('studio')}
-            className={`nav-tab-btn ${currentTab === 'studio' ? 'active' : ''}`}
-          >
-            <Cpu className="w-3.5 h-3.5" />
-            <span>AI Studio</span>
-          </button>
         </nav>
 
         {/* Desktop Action + Mobile Menu Toggle */}
@@ -145,15 +136,6 @@ export default function Navbar({ currentTab, onSelectTab }) {
           >
             <FileText className="w-4 h-4" />
             <span>Detection Reports</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => handleTabClick('studio')}
-            className={`mobile-nav-item ${currentTab === 'studio' ? 'active' : ''}`}
-          >
-            <Cpu className="w-4 h-4" />
-            <span>AI Threat Studio</span>
           </button>
         </div>
       )}

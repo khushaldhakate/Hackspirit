@@ -316,18 +316,18 @@ export default function LandingPage({ onOpenScanner, onSelectPreset, onSelectTab
           </div>
 
           <div
-            onClick={() => onSelectTab('studio')}
+            onClick={() => onSelectTab('reports')}
             className="theme-card p-5 sm:p-6 cursor-pointer hover:border-indigo-400 group"
           >
             <div className="p-2.5 w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 mb-4 flex items-center justify-center">
-              <Network className="w-5 h-5" />
+              <FileText className="w-5 h-5" />
             </div>
             <h4 className="font-bold text-base text-slate-900 mb-1 flex items-center justify-between">
-              <span>AI Studio & Sandbox</span>
+              <span>Detection Reports</span>
               <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-indigo-600 transition-all group-hover:translate-x-1" />
             </h4>
             <p className="text-xs text-slate-500 leading-relaxed">
-              Redirect tracer, Shannon entropy calculation, character substitution matrix, and prompt playground.
+              Historical scan ledger, deterministic evidence archive, and exportable forensic JSON audit logs.
             </p>
           </div>
         </div>

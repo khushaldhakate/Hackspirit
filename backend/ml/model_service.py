@@ -51,11 +51,12 @@ class URLBERTModelService:
             }
 
         try:
+            max_len = getattr(self.model.config, "max_position_embeddings", 64)
             inputs = self.tokenizer(
                 url,
                 return_tensors="pt",
                 truncation=True,
-                max_length=512,
+                max_length=max_len,
                 padding=True
             )
             with torch.no_grad():

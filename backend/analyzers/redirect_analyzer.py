@@ -30,7 +30,7 @@ def is_private_target(hostname: str) -> bool:
 
     return False
 
-def trace_url_redirects(start_url: str, max_redirects: int = 5, timeout_sec: float = 2.5) -> dict:
+def trace_url_redirects(start_url: str, max_redirects: int = 4, timeout_sec: float = 1.0) -> dict:
     """
     Safely follows HTTP 301/302 redirects up to max_redirects limit.
     Enforces scheme validation and private IP blocking.
